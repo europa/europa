@@ -1,6 +1,7 @@
 package com.europa.store.fragment;
 
 import com.europa.store.R;
+import com.europa.store.activity.AppsActivity;
 import com.europa.store.activity.RegistActivity;
 
 import android.content.Intent;
@@ -33,7 +34,7 @@ public class LoginFragment extends BaseFragment {
 		case R.id.loginBtn:
 			break;
 		case R.id.toRegistBtn:
-			hostActivity.replaceFragment(new RegistFragment());
+			startActivity(new Intent(hostActivity, RegistActivity.class));
 			break;
 		default:
 			break;

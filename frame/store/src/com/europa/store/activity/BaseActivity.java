@@ -37,11 +37,4 @@ public abstract class BaseActivity extends FragmentActivity {
 	 * @return 
 	 */
 	public abstract BaseFragment newFragment();
-	
-	public void replaceFragment(BaseFragment fragment){
-		FragmentTransaction transaction=fragmentManager.beginTransaction();
-		transaction.replace(android.R.id.content, fragment);
-		transaction.addToBackStack(null);
-		transaction.commit();
-	}
 }

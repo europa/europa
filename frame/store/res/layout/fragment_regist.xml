@@ -37,10 +37,35 @@
         android:hint="请输入密码"
         android:inputType="textPassword" />
 
+    <EditText
+        android:id="@+id/rePwdEdit"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pwdEdit"
+        android:layout_toRightOf="@id/pwdText"
+        android:hint="请再次输入密码"
+        android:inputType="textPassword" />
+
+    <TextView
+        android:id="@+id/emailText"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rePwdEdit"
+        android:text="邮箱" />
+
+    <EditText
+        android:id="@+id/emailEdit"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rePwdEdit"
+        android:layout_toRightOf="@id/emailText"
+        android:hint="请输入邮箱"
+        android:inputType="textEmailAddress" />
+
     <Button
         android:id="@+id/registBtn"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:text="注册" />
