@@ -31,8 +31,6 @@ public class LoginFragment extends BaseFragment {
 		pwdEdit=ViewUtil.findEdit(view, R.id.pwdEdit);
 		loginBtn=(Button) view.findViewById(R.id.loginBtn);
 		toRegistBtn=(Button) view.findViewById(R.id.toRegistBtn);
-		loginBtn.setOnClickListener(this);
-		toRegistBtn.setOnClickListener(this);
 		return view;
 	}
 	@Override

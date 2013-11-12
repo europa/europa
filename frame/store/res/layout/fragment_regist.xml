@@ -8,59 +8,101 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <TextView
-        android:id="@+id/unameText"
-        android:layout_width="100dp"
+    <LinearLayout
+        android:id="@+id/unameLayout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="用户名" />
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal" >
 
-    <EditText
-        android:id="@+id/unameEdit"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/unameText"
-        android:hint="请输入用户名" />
+        <TextView
+            android:id="@+id/unameText"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="用户名" />
 
-    <TextView
-        android:id="@+id/pwdText"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/unameText"
-        android:text="密码" />
+        <EditText
+            android:id="@+id/unameEdit"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/unameText"
+            android:hint="请输入用户名" />
+    </LinearLayout>
 
-    <EditText
-        android:id="@+id/pwdEdit"
-        android:layout_width="200dp"
+    <LinearLayout
+        android:id="@+id/pwdLayout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/unameEdit"
-        android:layout_toRightOf="@id/pwdText"
-        android:hint="请输入密码"
-        android:inputType="textPassword" />
+        android:layout_below="@id/unameLayout"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal" >
 
-    <EditText
-        android:id="@+id/rePwdEdit"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pwdEdit"
-        android:layout_toRightOf="@id/pwdText"
-        android:hint="请再次输入密码"
-        android:inputType="textPassword" />
+        <TextView
+            android:id="@+id/pwdText"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/unameText"
+            android:text="密码" />
 
-    <TextView
-        android:id="@+id/emailText"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/rePwdEdit"
-        android:text="邮箱" />
+        <EditText
+            android:id="@+id/pwdEdit"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/unameEdit"
+            android:layout_toRightOf="@id/pwdText"
+            android:hint="请输入密码"
+            android:inputType="textPassword" />
+    </LinearLayout>
 
-    <EditText
-        android:id="@+id/emailEdit"
-        android:layout_width="200dp"
+    <LinearLayout
+        android:id="@+id/rePwdLayout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/rePwdEdit"
-        android:layout_toRightOf="@id/emailText"
-        android:hint="请输入邮箱"
-        android:inputType="textEmailAddress" />
+        android:layout_below="@id/pwdLayout"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/unameText"
+            android:text="密码"
+            android:visibility="invisible" />
+
+        <EditText
+            android:id="@+id/rePwdEdit"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/pwdEdit"
+            android:layout_toRightOf="@id/pwdText"
+            android:hint="请再次输入密码"
+            android:inputType="textPassword" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/emailLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rePwdLayout"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/emailText"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rePwdEdit"
+            android:text="邮箱" />
+
+        <EditText
+            android:id="@+id/emailEdit"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rePwdEdit"
+            android:layout_toRightOf="@id/emailText"
+            android:hint="请输入邮箱"
+            android:inputType="textEmailAddress" />
+    </LinearLayout>
 
     <com.europa.store.ui.CommonBtn
         android:id="@+id/registBtn"

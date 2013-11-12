@@ -1,26 +1,20 @@
 package com.europa.store.fragment;
 
-import org.xml.sax.Parser;
-
-import com.avos.avoscloud.ParseException;
-import com.avos.avoscloud.ParseUser;
-import com.avos.avoscloud.PushService;
-import com.avos.avoscloud.SignUpCallback;
-import com.europa.store.R;
-import com.europa.store.activity.AppsActivity;
-import com.europa.store.tool.TextTool;
-import com.europa.store.tool.ToastTool;
-import com.europa.store.ui.CommonBtn;
-import com.europa.tool.ViewUtil;
-
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import com.avos.avoscloud.ParseException;
+import com.avos.avoscloud.ParseUser;
+import com.avos.avoscloud.SignUpCallback;
+import com.europa.store.R;
+import com.europa.store.activity.AppsActivity;
+import com.europa.store.tool.TextTool;
+import com.europa.store.tool.ToastTool;
+import com.europa.tool.ViewUtil;
 
 public class RegistFragment extends BaseFragment {
 
