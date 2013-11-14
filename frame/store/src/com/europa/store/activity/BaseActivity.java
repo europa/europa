@@ -1,19 +1,12 @@
 package com.europa.store.activity;
 
-import com.europa.store.fragment.BaseFragment;
-import com.europa.store.fragment.LoginFragment;
-
-import android.R;
-import android.os.Bundle;
-import android.R.anim;
-import android.R.integer;
 import android.app.Activity;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.view.Menu;
+import android.app.FragmentManager;
+import android.os.Bundle;
 
-public abstract class BaseActivity extends FragmentActivity {
+import com.europa.store.fragment.BaseFragment;
+
+public abstract class BaseActivity extends Activity {
 
 	/**
 	 * must be valued in SubActivity
@@ -27,7 +20,7 @@ public abstract class BaseActivity extends FragmentActivity {
 	public void fillFragment(Bundle bundle,int id,BaseFragment baseFragment){
 		if(bundle==null){
 			if(fragmentManager==null){
-				fragmentManager=getSupportFragmentManager();
+				fragmentManager=getFragmentManager();
 			}
 			fragmentManager.beginTransaction().add(id, baseFragment).commit();
 		}

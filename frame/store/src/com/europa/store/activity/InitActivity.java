@@ -1,14 +1,13 @@
 package com.europa.store.activity;
 
 import com.europa.store.fragment.BaseFragment;
-import com.europa.store.fragment.RegistFragment;
+import com.europa.store.fragment.InitFragment;
 
-public class RegistActivity extends BaseActivity {
+public class InitActivity extends BaseActivity {
 
 	@Override
 	public BaseFragment newFragment() {
-		subFragment=new RegistFragment();
+		subFragment=new InitFragment();
 		return subFragment;
 	}
-
 }

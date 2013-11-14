@@ -1,24 +1,21 @@
 package com.europa.store.fragment;
 
+import android.content.Intent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
 import com.avos.avoscloud.LogInCallback;
 import com.avos.avoscloud.ParseException;
 import com.avos.avoscloud.ParseUser;
 import com.europa.store.R;
 import com.europa.store.activity.AppsActivity;
 import com.europa.store.activity.RegistActivity;
+import com.europa.store.bean.User;
 import com.europa.store.tool.TextTool;
 import com.europa.store.tool.ToastTool;
 import com.europa.tool.ViewUtil;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 
 public class LoginFragment extends BaseFragment {
 
@@ -70,6 +67,15 @@ public class LoginFragment extends BaseFragment {
 			@Override
 			public void done(ParseUser arg0, ParseException arg1) {
 				if(arg0!=null){
+					if(userHelper.getUserByUsername(arg0.getUsername())==null){
+						User user=new User();
+						user.setUsername(arg0.getUsername());
+						user.setPwd(TextTool.getStr(pwdEdit));
+						user.setEmail(arg0.getEmail());
+						user.setAutologin(1);
+						userHelper.insertUser(user);
+					}
+					saveUserName(arg0.getUsername());
 					startActivity(new Intent(hostActivity, AppsActivity.class));
 				}else{
 					ToastTool.show(hostActivity,"登录失败！");
@@ -77,4 +83,5 @@ public class LoginFragment extends BaseFragment {
 			}
 		});
 	}
+	
 }

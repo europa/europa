@@ -1,15 +1,12 @@
 package com.europa.store.fragment;
 
-import com.europa.store.R;
-import com.europa.store.adapter.AppListAdapter;
-import com.europa.store.ui.CommonBtn;
-
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.europa.store.R;
+import com.europa.store.adapter.AppListAdapter;
 
 public class AppsFragment extends BaseFragment {
 	

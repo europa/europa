@@ -10,5 +10,4 @@ public class MainActivity extends BaseActivity {
 		subFragment=new LoginFragment();
 		return subFragment;
 	}
-
 }
