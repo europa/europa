@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import com.europa.store.R;
 import com.europa.store.fragment.AppsFragment;
 import com.europa.store.fragment.BaseFragment;
+import com.europa.store.fragment.UploadAppFragment;
 
 public class AppsActivity extends BaseActivity {
 
@@ -28,6 +29,9 @@ public class AppsActivity extends BaseActivity {
 		case R.id.logout:
 			subFragment.saveUserName(null);
 			startActivity(new Intent(this,MainActivity.class));
+			break;
+		case R.id.upload:
+			startActivity(new Intent(this,UploadAppActivity.class));
 			break;
 
 		default:

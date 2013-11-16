@@ -1,0 +1,212 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:scrollbars="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" >
+
+        <LinearLayout
+            android:id="@+id/appLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/packageLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/packageText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="应用包名" />
+
+                <EditText
+                    android:id="@+id/packageEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/companyLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/companyText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="公司名" />
+
+                <EditText
+                    android:id="@+id/companyEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/introLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/introText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="应用描述" />
+
+                <EditText
+                    android:id="@+id/introEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/versionCodeLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/appLayout" >
+
+            <TextView
+                android:id="@+id/versionCodeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="版本号" />
+
+            <EditText
+                android:id="@+id/versionCodeEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/versionNameLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/versionCodeLayout" >
+
+            <TextView
+                android:id="@+id/versionNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="版本号" />
+
+            <EditText
+                android:id="@+id/versionNameEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/descriptionLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/versionNameLayout" >
+
+            <EditText
+                android:id="@+id/descriptionEdit"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入app介绍" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/forceUpdateLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/descriptionLayout" >
+
+            <RadioGroup
+                android:id="@+id/forceUpdateGroup"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/forceUpdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="强制更新" />
+
+                <RadioButton
+                    android:id="@+id/notForceUpdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="非强制更新" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/uploadLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/forceUpdateLayout" >
+
+            <com.europa.store.ui.CommonBtn
+                android:id="@+id/uploadBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="上传apk" />
+
+            <TextView
+                android:id="@+id/apkText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/appLogoLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/uploadLayout" >
+
+            <com.europa.store.ui.CommonBtn
+                android:id="@+id/appLogoBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="上传应用logo" />
+
+            <ImageView
+                android:id="@+id/appLogoImg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/appImgLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/appLogoLayout" >
+
+            <com.europa.store.ui.CommonBtn
+                android:id="@+id/appImgBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="上传应用页面图" />
+
+            <GridView
+                android:id="@+id/appImgsGrid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <com.europa.store.ui.CommonBtn
+            android:id="@+id/submitBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/appImgLayout"
+            android:layout_centerHorizontal="true"
+            android:text="提交" />
+    </RelativeLayout>
+
+</ScrollView>

@@ -11,6 +11,7 @@ public abstract class BaseActivity extends Activity {
 	/**
 	 * must be valued in SubActivity
 	 */
+	public String TAG=this.getClass().getSimpleName();
 	public BaseFragment subFragment;
 	public FragmentManager fragmentManager;
 	protected void onCreate(Bundle savedInstanceState) {

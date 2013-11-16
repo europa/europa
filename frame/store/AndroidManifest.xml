@@ -29,6 +29,8 @@
         </activity>
         <activity android:name=".activity.AppsActivity" >
         </activity>
+        <activity android:name=".activity.UploadAppActivity" >
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
