@@ -3,11 +3,13 @@ package com.europa.store.activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 
 import com.europa.store.R;
 import com.europa.store.fragment.AppsFragment;
 import com.europa.store.fragment.BaseFragment;
 import com.europa.store.fragment.UploadAppFragment;
+import com.europa.store.tool.GlobalValue;
 
 public class AppsActivity extends BaseActivity {
 
@@ -39,4 +41,5 @@ public class AppsActivity extends BaseActivity {
 		}
 		return super.onContextItemSelected(item);
 	}
+	
 }

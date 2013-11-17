@@ -24,14 +24,16 @@
 
                 <TextView
                     android:id="@+id/packageText"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="应用包名" />
 
                 <EditText
                     android:id="@+id/packageEdit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3" />
             </LinearLayout>
 
             <LinearLayout
@@ -42,14 +44,16 @@
 
                 <TextView
                     android:id="@+id/companyText"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="公司名" />
 
                 <EditText
                     android:id="@+id/companyEdit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3" />
             </LinearLayout>
 
             <LinearLayout
@@ -60,14 +64,16 @@
 
                 <TextView
                     android:id="@+id/introText"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="应用描述" />
 
                 <EditText
                     android:id="@+id/introEdit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3" />
             </LinearLayout>
         </LinearLayout>
 
@@ -79,14 +85,16 @@
 
             <TextView
                 android:id="@+id/versionCodeText"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="版本号" />
 
             <EditText
                 android:id="@+id/versionCodeEdit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3" />
         </LinearLayout>
 
         <LinearLayout
@@ -97,14 +105,16 @@
 
             <TextView
                 android:id="@+id/versionNameText"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="版本号" />
+                android:layout_weight="1"
+                android:text="版本名称" />
 
             <EditText
                 android:id="@+id/versionNameEdit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3" />
         </LinearLayout>
 
         <LinearLayout
@@ -133,13 +143,14 @@
                 android:orientation="horizontal" >
 
                 <RadioButton
-                    android:id="@+id/forceUpdate"
+                    android:id="@+id/forceUpdateRadioBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:text="强制更新" />
 
                 <RadioButton
-                    android:id="@+id/notForceUpdate"
+                    android:id="@+id/notForceUpdateRadioBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="非强制更新" />
@@ -168,7 +179,8 @@
             android:id="@+id/appLogoLayout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/uploadLayout" >
+            android:layout_below="@id/uploadLayout"
+            android:orientation="vertical" >
 
             <com.europa.store.ui.CommonBtn
                 android:id="@+id/appLogoBtn"
@@ -186,7 +198,8 @@
             android:id="@+id/appImgLayout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/appLogoLayout" >
+            android:layout_below="@id/appLogoLayout"
+            android:orientation="vertical" >
 
             <com.europa.store.ui.CommonBtn
                 android:id="@+id/appImgBtn"
@@ -197,7 +210,10 @@
             <GridView
                 android:id="@+id/appImgsGrid"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:horizontalSpacing="10dp"
+                android:numColumns="auto_fit"
+                android:stretchMode="columnWidth" />
         </LinearLayout>
 
         <com.europa.store.ui.CommonBtn

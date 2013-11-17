@@ -9,6 +9,7 @@ public class App {
 	String appDescription;
 	String versionName;
 	int versionCode;
+	int forceUpdate;
 	String versionIntro;
 	String apkPath;
 	String logoPath;
@@ -68,6 +69,10 @@ public class App {
 	public void setImgsList(List<String> imgsList) {
 		this.imgsList = imgsList;
 	}
-	
-	
+	public int getForceUpdate() {
+		return forceUpdate;
+	}
+	public void setForceUpdate(int forceUpdate) {
+		this.forceUpdate = forceUpdate;
+	}
 }
