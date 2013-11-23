@@ -8,9 +8,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.avos.avoscloud.FindCallback;
-import com.avos.avoscloud.ParseException;
-import com.avos.avoscloud.ParseObject;
-import com.avos.avoscloud.ParseQuery;
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVQuery;
 import com.europa.store.R;
 import com.europa.store.adapter.AppListAdapter;
 
@@ -37,16 +37,16 @@ public class AppsFragment extends BaseFragment {
 
 	@Override
 	public void handle() {
-		ParseQuery<ParseObject> query=new ParseQuery<ParseObject>("App");
-		query.findInBackground(new FindCallback<ParseObject>() {
-			@Override
-			public void done(List<ParseObject> arg0, ParseException arg1) {
-				if(arg1!=null){
-					
-				}else{
-					
-				}
-			}
-		});
+//		AVQuery<AVObject> query=new AVQuery<AVObject>("App");
+//		query.findInBackground(new FindCallback<AVObject>() {
+//			@Override
+//			public void done(List<AVObject> arg0, AVException arg1) {
+//				if(arg1!=null){
+//					
+//				}else{
+//					
+//				}
+//			}
+//		});
 	}
 }

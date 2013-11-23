@@ -7,8 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.avos.avoscloud.ParseException;
-import com.avos.avoscloud.ParseUser;
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.SignUpCallback;
 import com.europa.store.R;
 import com.europa.store.activity.AppsActivity;
@@ -76,13 +76,13 @@ public class RegistFragment extends BaseFragment {
 	}
 	
 	private void regist(){
-		ParseUser user=new ParseUser();
+		AVUser user=new AVUser();
 		user.setUsername(TextTool.getStr(unameEdit));
 		user.setPassword(TextTool.getStr(pwdEdit));
 		user.setEmail(TextTool.getStr(emailEdit));
 		user.signUpInBackground(new SignUpCallback() {
 			@Override
-			public void done(ParseException arg0) {
+			public void done(AVException arg0) {
 				if(arg0==null){
 					ToastTool.show(hostActivity, "恭喜您！已注册成功！");
 					startActivity(new Intent(hostActivity, AppsActivity.class));

@@ -1,28 +1,25 @@
 package com.europa.store.fragment;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.DataSetObserver;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
-import android.widget.Gallery;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVFile;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.SaveCallback;
 import com.europa.store.R;
 import com.europa.store.adapter.AppImgAdapter;
 import com.europa.store.bean.App;
@@ -37,11 +34,12 @@ import com.europa.tool.ViewUtil;
 public class UploadAppFragment extends BaseFragment {
 
 	App app = new App();
+	MyLog log = new MyLog(TAG);
 	TextView apkText;
 	ImageView logoImg;
 	GridView appImgsGrid;
 	AppImgAdapter appImgAdapter;
-	EditText packageEdit, comEdit, appDescriptionEdit, versionCodeEdit,
+	EditText packageEdit, comEdit, appUpdateInfoEditText, versionCodeEdit,
 			versionNameEdit, appIntroEdit;
 	RadioGroup forceUpdateGroup;
 	int onClickPosition = -1;
@@ -63,9 +61,9 @@ public class UploadAppFragment extends BaseFragment {
 			}
 			break;
 		case R.id.submitBtn:
-			if(canSubmit()){
+			if (canSubmit()) {
 				fillApp();
-				
+				submit();
 			}
 			break;
 		default:
@@ -79,13 +77,14 @@ public class UploadAppFragment extends BaseFragment {
 		apkText = ViewUtil.findText(view, R.id.apkText);
 		packageEdit = ViewUtil.findEdit(view, R.id.packageEdit);
 		comEdit = ViewUtil.findEdit(view, R.id.companyEdit);
-		appDescriptionEdit = ViewUtil.findEdit(view, R.id.descriptionEdit);
+		appUpdateInfoEditText = ViewUtil.findEdit(view, R.id.appUpateInfoEdit);
 		versionCodeEdit = ViewUtil.findEdit(view, R.id.versionCodeEdit);
 		versionNameEdit = ViewUtil.findEdit(view, R.id.versionNameEdit);
 		appIntroEdit = ViewUtil.findEdit(view, R.id.introEdit);
 		logoImg = (ImageView) view.findViewById(R.id.appLogoImg);
 		appImgsGrid = (GridView) view.findViewById(R.id.appImgsGrid);
-		forceUpdateGroup=(RadioGroup) view.findViewById(R.id.forceUpdateGroup);
+		forceUpdateGroup = (RadioGroup) view
+				.findViewById(R.id.forceUpdateGroup);
 		appImgAdapter = new AppImgAdapter(app.getImgsList(), hostActivity);
 		appImgsGrid.setAdapter(appImgAdapter);
 		appImgsGrid.setOnItemClickListener(new OnItemClickListener() {
@@ -107,8 +106,13 @@ public class UploadAppFragment extends BaseFragment {
 		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 		intent.setType("*/*");
 		intent.addCategory(Intent.CATEGORY_OPENABLE);
-		startActivityForResult(
-				Intent.createChooser(intent, "Select a File to upload"), type);
+		if (isAdded()) {
+			startActivityForResult(
+					Intent.createChooser(intent, "Select a File to upload"),
+					type);
+		} else {
+			this.onAttach(hostActivity);
+		}
 	}
 
 	@Override
@@ -149,47 +153,117 @@ public class UploadAppFragment extends BaseFragment {
 	}
 
 	private Boolean canSubmit() {
-		EditText[] edits = { packageEdit, comEdit, appDescriptionEdit,
+		EditText[] edits = { packageEdit, comEdit, appUpdateInfoEditText,
 				versionCodeEdit, versionNameEdit, appIntroEdit };
-		Boolean result=true;
+		Boolean result = true;
 		for (EditText edit : edits) {
 			if (TextTool.isEmpty(edit)) {
 				edit.setError("不能为空!");
-				result=false;
+				result = false;
 			}
 		}
-		if(TextTool.isEmpty(apkText)){
-			result=false;
-			ToastTool.show(hostActivity,"请上传app文件！");
+		if (TextTool.isEmpty(apkText)) {
+			result = false;
+			ToastTool.show(hostActivity, "请上传app文件！");
 			return result;
 		}
-		if(logoImg.getBackground()!=null){
-			result=false;
-			ToastTool.show(hostActivity,"请上传app的logo图片！");
+		if (logoImg.getBackground() == null) {
+			result = false;
+			ToastTool.show(hostActivity, "请上传app的logo图片！");
 			return result;
 		}
-		if(appImgAdapter.getCount()!=2){
-			result=false;
-			ToastTool.show(hostActivity,"请上传app的两张截图!");
+		if (appImgAdapter.getCount() != 2) {
+			result = false;
+			ToastTool.show(hostActivity, "请上传app的两张截图!");
 			return result;
 		}
 		return result;
 	}
-	
+
 	/**
 	 * 填充app的信息
 	 */
-	private void fillApp(){
+	private void fillApp() {
 		app.setPackageName(TextTool.getStr(packageEdit));
 		app.setComName(TextTool.getStr(comEdit));
-		app.setAppDescription(TextTool.getStr(appDescriptionEdit));
+		app.setAppUpdateInfo(TextTool.getStr(appUpdateInfoEditText));
 		app.setVersionCode(Integer.parseInt(TextTool.getStr(versionCodeEdit)));
 		app.setVersionName(TextTool.getStr(versionNameEdit));
 		app.setVersionIntro(TextTool.getStr(appIntroEdit));
-		if(forceUpdateGroup.getCheckedRadioButtonId()==R.id.forceUpdateRadioBtn){
+		if (forceUpdateGroup.getCheckedRadioButtonId() == R.id.forceUpdateRadioBtn) {
 			app.setForceUpdate(GlobalValue.FORCEUPDATE);
-		}else{
+		} else {
 			app.setForceUpdate(GlobalValue.NOT_FORCEUPDATE);
 		}
+	}
+
+	private void submit() {
+		try {
+			AVFile appFile = AVFile.parseFileWithAbsoluteLocalPath(
+					"appFile", app.getApkPath());
+			final AVFile appLogo = AVFile.parseFileWithAbsoluteLocalPath(
+					"appLogo", app.getLogoPath());
+			final AVFile appImgA = AVFile.parseFileWithAbsoluteLocalPath(
+					"appImgA", app.getImgsList().get(0));
+			final AVFile appImgB = AVFile.parseFileWithAbsoluteLocalPath(
+					"appImgB", app.getImgsList().get(1));
+			String[] fileNames = { "appFile", "appLogo", "appImgA", "appImgB" };
+			AVFile[] files = { appFile, appLogo, appImgA, appImgB };
+			uploadFile(fileNames, files, 0);
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.e(e);
+		}
+
+	}
+
+	private void uploadFile(final String[] fileNames, final AVFile[] files,
+			final int index) throws Exception {
+		if (files.length == index) {
+			uploadApp(fileNames, files);
+			return;
+		}
+		log.i("upload " + fileNames[index]);
+		files[index].saveInBackground(new SaveCallback() {
+			@Override
+			public void done(AVException arg0) {
+				if (arg0 == null) {
+					log.i("success");
+					try {
+						uploadFile(fileNames, files, index + 1);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				} else {
+					ToastTool.show(hostActivity, "upload " + fileNames[index]
+							+ " failure.");
+				}
+			}
+		});
+	}
+
+	private void uploadApp(String[] fileNames, AVFile[] files) {
+		AVObject appObject = new AVObject("app");
+		for (int i = 0; i < fileNames.length; i++) {
+			appObject.put(fileNames[i], files[i]);
+		}
+		appObject.put("packageName", app.getPackageName());
+		appObject.put("company", app.getComName());
+		appObject.put("appDescription", app.getAppUpdateInfo());
+		appObject.put("versionName", app.getVersionName());
+		appObject.put("versionCode", app.getVersionCode());
+		appObject.put("forceUpdate", app.getForceUpdate());
+		appObject.put("versionIntro", app.getVersionIntro());
+		appObject.saveInBackground(new SaveCallback() {
+			@Override
+			public void done(AVException arg0) {
+				if (arg0 == null) {
+					ToastTool.show(hostActivity, "upload app successfully!");
+					hostActivity.onBackPressed();
+				} else {
+					ToastTool.show(hostActivity, "upload app failly!");
+				}
+			}
+		});
 	}
 }

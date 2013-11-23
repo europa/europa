@@ -6,7 +6,7 @@ import java.util.List;
 public class App {
 	String packageName;
 	String comName;
-	String appDescription;
+	String appUpdateInfo;
 	String versionName;
 	int versionCode;
 	int forceUpdate;
@@ -27,11 +27,11 @@ public class App {
 	public void setComName(String comName) {
 		this.comName = comName;
 	}
-	public String getAppDescription() {
-		return appDescription;
+	public String getAppUpdateInfo() {
+		return appUpdateInfo;
 	}
-	public void setAppDescription(String appDescription) {
-		this.appDescription = appDescription;
+	public void setAppUpdateInfo(String appUpdateInfo) {
+		this.appUpdateInfo = appUpdateInfo;
 	}
 	public String getVersionName() {
 		return versionName;
