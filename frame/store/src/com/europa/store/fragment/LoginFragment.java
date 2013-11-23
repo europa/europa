@@ -7,8 +7,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.avos.avoscloud.LogInCallback;
-import com.avos.avoscloud.ParseException;
-import com.avos.avoscloud.ParseUser;
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVUser;
 import com.europa.store.R;
 import com.europa.store.activity.AppsActivity;
 import com.europa.store.activity.RegistActivity;
@@ -63,9 +63,9 @@ public class LoginFragment extends BaseFragment {
 	}
 	
 	private void login(){
-		ParseUser.logInInBackground(TextTool.getStr(unameEdit), TextTool.getStr(pwdEdit), new LogInCallback<ParseUser>() {
+		AVUser.logInInBackground(TextTool.getStr(unameEdit), TextTool.getStr(pwdEdit), new LogInCallback<AVUser>() {
 			@Override
-			public void done(ParseUser arg0, ParseException arg1) {
+			public void done(AVUser arg0, AVException arg1) {
 				if(arg0!=null){
 					if(userHelper.getUserByUsername(arg0.getUsername())==null){
 						User user=new User();

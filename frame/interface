@@ -1,0 +1,19 @@
+1.app
+input:
+{
+	"packageName":"",//应用包名
+	"company":"",//公司名
+	"appDescription":"",//应用描述
+	"versionName":"",//应用名
+	"versionCode":"",//应用版本号
+	"forceUpdate":"",//是否强制更新:1，强制更新；0，非强制更新
+	"versionIntro":"",//版本更新信息
+	"apkPath":"",//应用的本地路径
+	"logoPath":"",//应用logo的路径
+	"imageA":"",//应用截图a
+	"imageB":"",//应用截图b
+}
+output:
+{
+	
+}

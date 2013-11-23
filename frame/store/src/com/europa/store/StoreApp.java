@@ -1,6 +1,6 @@
 package com.europa.store;
 
-import com.avos.avoscloud.Parse;
+import com.avos.avoscloud.AVOSCloud;
 import com.europa.store.tool.GlobalValue;
 import com.europa.store.tool.DataTool.MySqliteHelper;
 
@@ -10,8 +10,8 @@ public class StoreApp extends Application {
 
 	@Override
 	public void onCreate() {
-		Parse.useAVCloudCN();
-		Parse.initialize(this, GlobalValue.AVOS_APP_ID, GlobalValue.AVOS_APP_KEY);
+		AVOSCloud.useAVCloudCN();
+		AVOSCloud.initialize(this, GlobalValue.AVOS_APP_ID, GlobalValue.AVOS_APP_KEY);
 		MySqliteHelper helper=new MySqliteHelper(this);
 		super.onCreate();
 	}

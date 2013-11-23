@@ -124,10 +124,10 @@
             android:layout_below="@id/versionNameLayout" >
 
             <EditText
-                android:id="@+id/descriptionEdit"
+                android:id="@+id/appUpateInfoEdit"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:hint="请输入app介绍" />
+                android:hint="请输入app更新信息" />
         </LinearLayout>
 
         <LinearLayout

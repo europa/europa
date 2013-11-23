@@ -143,6 +143,13 @@ public class MyLog {
 			writeLogtoFile(tag, msg, "Errors");
 		}
 	}
+	public void e(Throwable e){
+		if (isDebug) {
+			Log.e(tag, e.toString());
+		} else {
+			writeLogtoFile(tag, e.toString(), "Errors");
+		}
+	}
 
 //	public void e(String msg, Throwable ex) {
 //		if (isDebug) {
