@@ -10,17 +10,24 @@ public class CommonBtn extends Button {
 
 	public CommonBtn(Context context) {
 		super(context);
-		setOnClickListener(((BaseActivity)context).subFragment);
+		setListener(context);
 	}
 
 	public CommonBtn(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		setOnClickListener(((BaseActivity)context).subFragment);
+		setListener(context);
 	}
 
 	public CommonBtn(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		setOnClickListener(((BaseActivity)context).subFragment);
+		setListener(context);
 	}
 	
+	private void setListener(Context context) {
+		if (context instanceof BaseActivity) {
+			setOnClickListener(((BaseActivity) context).subFragment);
+		} else {
+			setOnClickListener((OnClickListener) context);
+		}
+	}
 }

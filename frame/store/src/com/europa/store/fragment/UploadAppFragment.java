@@ -3,6 +3,8 @@ package com.europa.store.fragment;
 import java.io.File;
 
 import android.app.Activity;
+import android.app.DialogFragment;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.ProgressCallback;
 import com.avos.avoscloud.SaveCallback;
 import com.avos.avoscloud.LogUtil.avlog;
 import com.europa.store.R;
@@ -44,6 +47,7 @@ public class UploadAppFragment extends BaseFragment {
 			versionNameEdit, appIntroEdit;
 	RadioGroup forceUpdateGroup;
 	int onClickPosition = -1;
+	ProgressDialog progressDialog;
 
 	@Override
 	public void onClick(View arg0) {
@@ -102,6 +106,7 @@ public class UploadAppFragment extends BaseFragment {
 				// showFileChooser(GlobalValue.APK_IMGS_SELECT_CODE);
 			}
 		});
+		progressDialog=new ProgressDialog(hostActivity,ProgressDialog.STYLE_HORIZONTAL);
 		return view;
 	}
 
@@ -220,6 +225,7 @@ public class UploadAppFragment extends BaseFragment {
 					"imgb", app.getImgsList().get(1));
 			String[] fileNames = { "file", "logo", "imga", "imgb" };
 			AVFile[] files = { appFile, appLogo, appImgA, appImgB };
+			progressDialog.setMax(100);
 			uploadFile(fileNames, files, 0);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -235,6 +241,8 @@ public class UploadAppFragment extends BaseFragment {
 			return;
 		}
 		log.i("upload " + fileNames[index]);
+		progressDialog.setProgress(0);
+		progressDialog.show(hostActivity,"上传app","正在上传"+fileNames[index],true,false);
 		files[index].saveInBackground(new SaveCallback() {
 			@Override
 			public void done(AVException arg0) {
@@ -249,6 +257,12 @@ public class UploadAppFragment extends BaseFragment {
 					ToastTool.show(hostActivity, "upload " + fileNames[index]
 							+ " failure.");
 				}
+			}
+		},new ProgressCallback() {
+			
+			@Override
+			public void done(Integer arg0) {
+				progressDialog.setProgress(arg0);
 			}
 		});
 	}
