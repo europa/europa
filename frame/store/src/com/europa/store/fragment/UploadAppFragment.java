@@ -20,6 +20,7 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.SaveCallback;
+import com.avos.avoscloud.LogUtil.avlog;
 import com.europa.store.R;
 import com.europa.store.adapter.AppImgAdapter;
 import com.europa.store.bean.App;
@@ -92,7 +93,13 @@ public class UploadAppFragment extends BaseFragment {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				onClickPosition = arg2;
-				showFileChooser(GlobalValue.APK_IMGS_SELECT_CODE);
+				new Thread() {
+					@Override
+					public void run() {
+						showFileChooser(GlobalValue.APK_IMGS_SELECT_CODE);
+					}
+				}.start();
+				// showFileChooser(GlobalValue.APK_IMGS_SELECT_CODE);
 			}
 		});
 		return view;
@@ -112,7 +119,7 @@ public class UploadAppFragment extends BaseFragment {
 					type);
 		} else {
 			this.onAttach(hostActivity);
-			log.i(TAG+" is not added to hostActivity");
+			log.i(TAG + " is not added to hostActivity");
 			startActivityForResult(
 					Intent.createChooser(intent, "Select a File to upload"),
 					type);
@@ -203,15 +210,15 @@ public class UploadAppFragment extends BaseFragment {
 
 	private void submit() {
 		try {
-			AVFile appFile = AVFile.parseFileWithAbsoluteLocalPath(
-					"appFile", app.getApkPath());
+			AVFile appFile = AVFile.parseFileWithAbsoluteLocalPath("file",
+					app.getApkPath());
 			final AVFile appLogo = AVFile.parseFileWithAbsoluteLocalPath(
-					"appLogo", app.getLogoPath());
+					"logo", app.getLogoPath());
 			final AVFile appImgA = AVFile.parseFileWithAbsoluteLocalPath(
-					"appImgA", app.getImgsList().get(0));
+					"imga", app.getImgsList().get(0));
 			final AVFile appImgB = AVFile.parseFileWithAbsoluteLocalPath(
-					"appImgB", app.getImgsList().get(1));
-			String[] fileNames = { "appFile", "appLogo", "appImgA", "appImgB" };
+					"imgb", app.getImgsList().get(1));
+			String[] fileNames = { "file", "logo", "imga", "imgb" };
 			AVFile[] files = { appFile, appLogo, appImgA, appImgB };
 			uploadFile(fileNames, files, 0);
 		} catch (Exception e) {
