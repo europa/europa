@@ -1,6 +1,9 @@
 package com.europa.filehelper.ui.fragment;
 
+import java.io.File;
+
 import android.app.ActionBar;
+import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
@@ -8,9 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.avos.avoscloud.AVAnalytics;
 import com.europa.filehelper.R;
+import com.europa.filehelper.Tool.Brain;
 import com.europa.filehelper.ui.activity.BaseActivity;
 
 /**
@@ -25,7 +30,9 @@ public abstract class BaseFragment extends Fragment implements OnClickListener{
 	String TAG = this.getClass().getSimpleName();
 	public BaseActivity hostActivity;
 	ActionBar actionBar;
-
+	Brain brain=Brain.newInstance();
+	File currentFile;
+	
 	public void onCreate(Bundle savedInstanceState) {
 		hostActivity = (BaseActivity)getActivity();
 		actionBar=hostActivity.getActionBar();
@@ -65,10 +72,14 @@ public abstract class BaseFragment extends Fragment implements OnClickListener{
 
 	public abstract View findView(LayoutInflater inflater);
 	public abstract void handle();
-	public void replaceFragmentById(BaseFragment fragment){
+	public void replaceFragment(BaseFragment fragment,String path){
+		brain.setCurrentFile(path);
 		FragmentTransaction transaction=hostActivity.fragmentManager.beginTransaction();
 		transaction.replace(R.id.container,fragment);
 		transaction.addToBackStack(null);
 		transaction.commit();
+	}
+	public void showToast(String toast){
+		Toast.makeText(hostActivity,toast,Toast.LENGTH_SHORT).show();
 	}
 }

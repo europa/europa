@@ -13,7 +13,7 @@ public class App extends Application{
 		AVOSCloud.useAVCloudCN();
 		AVOSCloud.initialize(this, GlobalValue.AVOS_APP_ID,GlobalValue.AVOS_APP_KEY);
 		AVAnalytics.start(this);
-		AVAnalytics.enableCrashReport(this, true);
+		AVAnalytics.enableCrashReport(this, false);
 		super.onCreate();
 	}
 	
