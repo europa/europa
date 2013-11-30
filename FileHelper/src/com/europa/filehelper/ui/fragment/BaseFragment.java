@@ -1,6 +1,8 @@
 package com.europa.filehelper.ui.fragment;
 
+import android.app.ActionBar;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import com.avos.avoscloud.AVAnalytics;
+import com.europa.filehelper.R;
 import com.europa.filehelper.ui.activity.BaseActivity;
 
 /**
@@ -21,9 +24,11 @@ import com.europa.filehelper.ui.activity.BaseActivity;
 public abstract class BaseFragment extends Fragment implements OnClickListener{
 	String TAG = this.getClass().getSimpleName();
 	public BaseActivity hostActivity;
+	ActionBar actionBar;
 
 	public void onCreate(Bundle savedInstanceState) {
 		hostActivity = (BaseActivity)getActivity();
+		actionBar=hostActivity.getActionBar();
 		super.onCreate(savedInstanceState);
 	}
 	
@@ -32,6 +37,7 @@ public abstract class BaseFragment extends Fragment implements OnClickListener{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view =findView(inflater);
+		AVAnalytics.trackAppOpened(hostActivity.getIntent());
 		handle();
 		return view;
 	}
@@ -39,7 +45,6 @@ public abstract class BaseFragment extends Fragment implements OnClickListener{
 	
 	@Override
 	public void onClick(View arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -60,4 +65,10 @@ public abstract class BaseFragment extends Fragment implements OnClickListener{
 
 	public abstract View findView(LayoutInflater inflater);
 	public abstract void handle();
+	public void replaceFragmentById(BaseFragment fragment){
+		FragmentTransaction transaction=hostActivity.fragmentManager.beginTransaction();
+		transaction.replace(R.id.container,fragment);
+		transaction.addToBackStack(null);
+		transaction.commit();
+	}
 }
