@@ -1,10 +1,16 @@
 package com.europa.store.fragment;
 
+import java.util.List;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.FindCallback;
 import com.europa.store.R;
 import com.europa.store.adapter.AppListAdapter;
 
@@ -31,16 +37,11 @@ public class AppsFragment extends BaseFragment {
 
 	@Override
 	public void handle() {
-//		AVQuery<AVObject> query=new AVQuery<AVObject>("App");
-//		query.findInBackground(new FindCallback<AVObject>() {
-//			@Override
-//			public void done(List<AVObject> arg0, AVException arg1) {
-//				if(arg1!=null){
-//					
-//				}else{
-//					
-//				}
-//			}
-//		});
+		AVQuery<AVObject> query=new AVQuery<AVObject>("app");
+		query.findInBackground(new FindCallback<AVObject>() {
+			@Override
+			public void done(List<AVObject> arg0, AVException arg1) {
+			}
+		});
 	}
 }
