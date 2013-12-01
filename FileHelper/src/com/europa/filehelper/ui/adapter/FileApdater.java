@@ -44,7 +44,7 @@ public class FileApdater extends ToolAdapter<FileItem>{
 		}
 		FileItem item=getItem(arg0);
 		handleTypeImg(item, holder.typeImg);
-		holder.fileNameText.setText(item.getFileName());
+		holder.fileNameText.setText(item.getFile().getName());
 		holder.fileChk.setVisibility(hostActivity.edited?View.VISIBLE:View.INVISIBLE);
 		if(hostActivity.edited){
 			holder.fileChk.setChecked(item.getChecked());

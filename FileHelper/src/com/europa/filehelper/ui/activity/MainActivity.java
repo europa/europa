@@ -1,15 +1,28 @@
 package com.europa.filehelper.ui.activity;
 
 import android.app.DialogFragment;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.europa.filehelper.R;
+import com.europa.filehelper.Tool.Brain;
 import com.europa.filehelper.ui.fragment.BaseFragment;
 import com.europa.filehelper.ui.fragment.FileDialogFragment;
 import com.europa.filehelper.ui.fragment.MainFragment;
 
 public class MainActivity extends BaseActivity {
+
+	Brain brain=Brain.newInstance();
+	@Override
+	public void onBackPressed() {
+		if(brain.getCurrentFile().equals(Environment.getExternalStorageDirectory())){
+			brain=null;
+		}else{
+			brain.setCurrentFile(brain.getCurrentFile().getParentFile());
+		}
+		super.onBackPressed();
+	}
 
 	DialogFragment fragment;
 	@Override
@@ -40,4 +53,6 @@ public class MainActivity extends BaseActivity {
 		fragment=FileDialogFragment.newInstance("是否删除文件？");
 		fragment.show(fragmentManager,null);
 	}
+	
+	
 }

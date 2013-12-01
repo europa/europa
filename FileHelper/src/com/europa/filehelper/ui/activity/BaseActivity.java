@@ -51,12 +51,16 @@ public abstract class BaseActivity extends Activity {
 	 */
 	public abstract BaseFragment newFragment();
 
-	public void addDirectorys(String directorys) {
+	public void addDirectorys(File file) {
 		directoryLayout.removeAllViews();
-		for (String directory : directorys.split(File.separator)) {
-			if (!directory.equals("")) {
-				addDirectory(directory);
-			}
+		String[] directorys=file.getPath().split(File.separator);
+		String[] dirs=new String[directorys.length-1];
+		dirs[0]="内存设备";
+		for(int i=3;i<directorys.length;i++){
+			dirs[i-2]=directorys[i];
+		}
+		for (String directory : dirs) {
+			addDirectory(directory);
 		}
 	}
 

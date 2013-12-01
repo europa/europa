@@ -3,7 +3,6 @@ package com.europa.filehelper.ui.fragment;
 import java.io.File;
 
 import android.app.ActionBar;
-import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
@@ -72,8 +71,7 @@ public abstract class BaseFragment extends Fragment implements OnClickListener{
 
 	public abstract View findView(LayoutInflater inflater);
 	public abstract void handle();
-	public void replaceFragment(BaseFragment fragment,String path){
-		brain.setCurrentFile(path);
+	public void replaceFragment(BaseFragment fragment){
 		FragmentTransaction transaction=hostActivity.fragmentManager.beginTransaction();
 		transaction.replace(R.id.container,fragment);
 		transaction.addToBackStack(null);
@@ -82,4 +80,6 @@ public abstract class BaseFragment extends Fragment implements OnClickListener{
 	public void showToast(String toast){
 		Toast.makeText(hostActivity,toast,Toast.LENGTH_SHORT).show();
 	}
+	
+	
 }

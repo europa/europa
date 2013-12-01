@@ -1,8 +1,10 @@
 package com.europa.filehelper.bean;
 
+import java.io.File;
+
 public class FileItem {
 	int type;
-	String fileName;
+	File file;
 	Boolean checked = false;
 
 	public int getType() {
@@ -13,12 +15,12 @@ public class FileItem {
 		this.type = type;
 	}
 
-	public String getFileName() {
-		return fileName;
+	public File getFile() {
+		return file;
 	}
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
+	public void setFile(File fileName) {
+		this.file = fileName;
 	}
 
 	public Boolean getChecked() {

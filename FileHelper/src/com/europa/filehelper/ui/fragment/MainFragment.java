@@ -54,11 +54,10 @@ public class MainFragment extends BaseFragment {
 		if (Environment.getExternalStorageState().equals(
 				Environment.MEDIA_MOUNTED)) {
 			currentFile=brain.getCurrentFile();
-			String directory = currentFile.getPath();
-			hostActivity.addDirectorys(directory);
+			hostActivity.addDirectorys(currentFile);
 			for (File file : currentFile.listFiles()) {
 				FileItem item = new FileItem();
-				item.setFileName(file.getName());
+				item.setFile(file);
 				item.setType(file.isDirectory() ? GlobalValue.IS_DIRECTORY
 						: GlobalValue.IS_FILE);
 				fileItemList.add(item);
@@ -75,8 +74,8 @@ public class MainFragment extends BaseFragment {
 				FileItem item = fileItemList.get(arg2);
 				if (mActionMode == null
 						&& item.getType() == GlobalValue.IS_DIRECTORY) {
-					replaceFragment(new MainFragment(), currentFile.getPath()
-							+ File.separator + item.getFileName());
+					brain.setCurrentFile(item.getFile());
+					replaceFragment(new MainFragment());
 				} else {
 					showToast("This is a file!");
 				}
@@ -156,9 +155,8 @@ public class MainFragment extends BaseFragment {
 		List<FileItem> deletedItems = new ArrayList<FileItem>();
 		for (FileItem item : fileItemList) {
 			if (item.getChecked()) {
-				String path = currentFile.getPath() + File.separator
-						+ item.getFileName();
-				File file = new File(path);
+				File file=item.getFile();
+				String path=file.getPath();
 				if (file.delete()) {
 					Log.i(TAG, "delete " + path + " successfully");
 				} else {
