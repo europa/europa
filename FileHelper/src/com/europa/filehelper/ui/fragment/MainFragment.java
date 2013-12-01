@@ -189,4 +189,8 @@ public class MainFragment extends BaseFragment {
 			}
 		}
 	}
+	
+	public void search(String key){
+		Log.i(TAG,key);
+	}
 }
