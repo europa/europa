@@ -113,6 +113,7 @@ public class MainFragment extends BaseFragment {
 				switch (arg1.getItemId()) {
 				case R.id.item_delete:
 					((MainActivity) hostActivity).handleDelete();
+					onDestroyActionMode(arg0);
 					break;
 				case R.id.all:
 					handleAll(arg1);

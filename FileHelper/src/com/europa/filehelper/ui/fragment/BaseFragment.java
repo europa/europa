@@ -72,6 +72,7 @@ public abstract class BaseFragment extends Fragment implements OnClickListener{
 	public abstract View findView(LayoutInflater inflater);
 	public abstract void handle();
 	public void replaceFragment(BaseFragment fragment){
+		hostActivity.subFragment=fragment;
 		FragmentTransaction transaction=hostActivity.fragmentManager.beginTransaction();
 		transaction.replace(R.id.container,fragment);
 		transaction.addToBackStack(null);
