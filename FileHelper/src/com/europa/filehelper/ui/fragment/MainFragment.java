@@ -16,7 +16,9 @@ import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.europa.filehelper.R;
@@ -42,6 +44,7 @@ public class MainFragment extends BaseFragment {
 	FileApdater fileListAdapter;
 	ActionMode mActionMode;
 	private Boolean allOn = false;
+	private TextView emptyFolderText;
 
 	@Override
 	public void onClick(View v) {
@@ -65,8 +68,10 @@ public class MainFragment extends BaseFragment {
 			}
 		}
 		fileListView = ViewUtil.findListView(view, R.id.fileListView);
+		emptyFolderText=(TextView) view.findViewById(R.id.emptyfolderText);
 		fileListAdapter = new FileApdater(fileItemList, hostActivity);
 		fileListView.setAdapter(fileListAdapter);
+		fileListView.setEmptyView(emptyFolderText);
 		fileListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
 		fileListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override

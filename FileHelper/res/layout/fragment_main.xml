@@ -14,4 +14,11 @@
         android:layout_height="fill_parent" >
     </ListView>
 
+    <TextView
+        android:id="@+id/emptyfolderText"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:text="This folder is empty." />
+
 </RelativeLayout>
