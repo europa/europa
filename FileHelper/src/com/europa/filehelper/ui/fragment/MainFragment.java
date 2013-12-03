@@ -55,6 +55,7 @@ public class MainFragment extends BaseFragment {
 				Environment.MEDIA_MOUNTED)) {
 			currentFile=brain.getCurrentFile();
 			hostActivity.addDirectorys(currentFile);
+			fileItemList.clear();
 			for (File file : currentFile.listFiles()) {
 				FileItem item = new FileItem();
 				item.setFile(file);
@@ -112,8 +113,8 @@ public class MainFragment extends BaseFragment {
 			public boolean onActionItemClicked(ActionMode arg0, MenuItem arg1) {
 				switch (arg1.getItemId()) {
 				case R.id.item_delete:
+					mActionMode=arg0;
 					((MainActivity) hostActivity).handleDelete();
-					onDestroyActionMode(arg0);
 					break;
 				case R.id.all:
 					handleAll(arg1);
@@ -168,6 +169,7 @@ public class MainFragment extends BaseFragment {
 		}
 		fileItemList.removeAll(deletedItems);
 		fileListAdapter.notifyDataSetChanged();
+		multiChoiceModeListener.onDestroyActionMode(mActionMode);
 	}
 
 	private void handleAll(MenuItem item) {
