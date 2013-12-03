@@ -56,7 +56,7 @@ public class MainFragment extends BaseFragment {
 		View view = inflater.inflate(R.layout.fragment_main, null);
 		if (Environment.getExternalStorageState().equals(
 				Environment.MEDIA_MOUNTED)) {
-			currentFile=brain.getCurrentFile();
+			currentFile = brain.getCurrentFile();
 			hostActivity.addDirectorys(currentFile);
 			fileItemList.clear();
 			for (File file : currentFile.listFiles()) {
@@ -68,7 +68,7 @@ public class MainFragment extends BaseFragment {
 			}
 		}
 		fileListView = ViewUtil.findListView(view, R.id.fileListView);
-		emptyFolderText=(TextView) view.findViewById(R.id.emptyfolderText);
+		emptyFolderText = (TextView) view.findViewById(R.id.emptyfolderText);
 		fileListAdapter = new FileApdater(fileItemList, hostActivity);
 		fileListView.setAdapter(fileListAdapter);
 		fileListView.setEmptyView(emptyFolderText);
@@ -118,7 +118,7 @@ public class MainFragment extends BaseFragment {
 			public boolean onActionItemClicked(ActionMode arg0, MenuItem arg1) {
 				switch (arg1.getItemId()) {
 				case R.id.item_delete:
-					mActionMode=arg0;
+					mActionMode = arg0;
 					((MainActivity) hostActivity).handleDelete();
 					break;
 				case R.id.all:
@@ -162,8 +162,8 @@ public class MainFragment extends BaseFragment {
 		List<FileItem> deletedItems = new ArrayList<FileItem>();
 		for (FileItem item : fileItemList) {
 			if (item.getChecked()) {
-				File file=item.getFile();
-				String path=file.getPath();
+				File file = item.getFile();
+				String path = file.getPath();
 				if (file.delete()) {
 					Log.i(TAG, "delete " + path + " successfully");
 				} else {
@@ -196,8 +196,49 @@ public class MainFragment extends BaseFragment {
 			}
 		}
 	}
-	
-	public void search(String key){
-		Log.i(TAG,key);
+
+	public void search(String key) {
+		key = key.trim();
+		List<FileItem> items = new ArrayList<FileItem>();
+		int type = 0;
+		int length = key.length();
+		if (length == 0) {
+			type = GlobalValue.SEARCH_ALL;
+		} else if (length == 1) {
+			type = GlobalValue.SEARCH_EQUAL;
+		} else if (key.startsWith("*") && key.endsWith("*")) {
+			type = GlobalValue.SERACH_CONTAIN;
+			key = key.substring(1, length - 1);
+		} else if (key.startsWith("*")) {
+			key = key.substring(1, length);
+			type = GlobalValue.SEARCH_END;
+		} else if (key.endsWith("*")) {
+			type = GlobalValue.SERCH_START;
+			key = key.substring(0, length - 1);
+		} else {
+			type = GlobalValue.SEARCH_EQUAL;
+		}
+		items = searchByType(type, key);
+		fileListAdapter.list = items;
+		fileListAdapter.notifyDataSetChanged();
+		if (items.size() != 0&&items.size()!=fileItemList.size()) {
+			hostActivity.startActionMode(multiChoiceModeListener);
+		}
+	}
+
+	public List<FileItem> searchByType(int type, String key) {
+		List<FileItem> items = new ArrayList<FileItem>();
+		for (FileItem item : fileItemList) {
+			 String name = item.getFile().getName();
+			if ((type == GlobalValue.SEARCH_END && name.endsWith(key))
+					|| (type == GlobalValue.SEARCH_EQUAL
+							&& name.equalsIgnoreCase((key))
+							|| (type == GlobalValue.SERACH_CONTAIN)
+							&& name.contains(key) || (type == GlobalValue.SERCH_START && name
+							.startsWith(key)))||type==GlobalValue.SEARCH_ALL) {
+				items.add(item);
+			}
+		}
+		return items;
 	}
 }

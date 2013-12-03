@@ -62,6 +62,8 @@ public class MainActivity extends BaseActivity {
 
 			@Override
 			public boolean onQueryTextChange(String newText) {
+				((MainFragment) subFragment).search(searchView.getQuery()
+						.toString());
 				return false;
 			}
 		});

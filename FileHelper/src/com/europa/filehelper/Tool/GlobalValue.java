@@ -8,4 +8,11 @@ public class GlobalValue {
 	
 	public static final int IS_DIRECTORY=0;
 	public static final int IS_FILE=1;
+	
+	public static final int SERACH_CONTAIN=0;
+	public static final int SERCH_START=1;
+	public static final int SEARCH_END=2;
+	public static final int SEARCH_EQUAL=3;
+	public static final int SEARCH_ALL=4;
+	
 }
