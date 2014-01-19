@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 import android.util.SparseBooleanArray;
@@ -22,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.europa.filehelper.R;
+import com.europa.filehelper.Tool.FileMIMEType;
 import com.europa.filehelper.Tool.GlobalValue;
 import com.europa.filehelper.bean.FileItem;
 import com.europa.filehelper.ui.activity.MainActivity;
@@ -62,8 +65,7 @@ public class MainFragment extends BaseFragment {
 			for (File file : currentFile.listFiles()) {
 				FileItem item = new FileItem();
 				item.setFile(file);
-				item.setType(file.isDirectory() ? GlobalValue.IS_DIRECTORY
-						: GlobalValue.IS_FILE);
+				item.setType(getFileType(item));
 				fileItemList.add(item);
 			}
 		}
@@ -79,11 +81,11 @@ public class MainFragment extends BaseFragment {
 					long arg3) {
 				FileItem item = fileItemList.get(arg2);
 				if (mActionMode == null
-						&& item.getType() == GlobalValue.IS_DIRECTORY) {
+						&& item.getFile().isDirectory()) {
 					brain.setCurrentFile(item.getFile());
 					replaceFragment(new MainFragment());
 				} else {
-					showToast("This is a file!");
+					handleFile(item);
 				}
 			}
 		});
@@ -118,7 +120,7 @@ public class MainFragment extends BaseFragment {
 			public boolean onActionItemClicked(ActionMode arg0, MenuItem arg1) {
 				switch (arg1.getItemId()) {
 				case R.id.item_delete:
-					mActionMode = arg0;
+//					mActionMode = arg0;
 					((MainActivity) hostActivity).handleDelete();
 					break;
 				case R.id.all:
@@ -173,7 +175,6 @@ public class MainFragment extends BaseFragment {
 			}
 		}
 		fileItemList.removeAll(deletedItems);
-		fileListAdapter.notifyDataSetChanged();
 		multiChoiceModeListener.onDestroyActionMode(mActionMode);
 	}
 
@@ -240,5 +241,60 @@ public class MainFragment extends BaseFragment {
 			}
 		}
 		return items;
+	}
+	
+	private void handleFile(FileItem item){
+		Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setAction(android.content.Intent.ACTION_VIEW);
+        String type = getMIMEType(item.getFile());
+        if(type.equals("")){
+        	showToast("此文件不能打开！");
+        	return;
+        }
+        intent.setDataAndType(Uri.fromFile(item.getFile()), type);
+        startActivity(intent);
+	}
+	
+	private String getMIMEType(File file){
+		String type="";
+		String fileName=file.getName();
+		if(!fileName.contains(".")){
+			return type;
+		}
+		String end=fileName.substring(fileName.lastIndexOf("."),fileName.length());
+		for(int i=0;i<FileMIMEType.MIME_TYPES.length;i++){
+			if(end.equals(FileMIMEType.MIME_TYPES[i][0])){
+				type=FileMIMEType.MIME_TYPES[i][1];
+				break;
+			}
+		}
+		return type;
+	}
+	
+	private int getFileType(FileItem item){
+		if(item.getFile().isDirectory()){
+			return R.drawable.folder;
+		}
+		String mimeType=getMIMEType(item.getFile());
+		if(mimeType.contains("text")){
+			return R.drawable.txt;
+		}else if(mimeType.contains("video")){
+			return R.drawable.video;
+		}else if(mimeType.contains("application/vnd.android.package-archive")){
+			return R.drawable.apk;
+		}else if(mimeType.contains("image")){
+			return R.drawable.image;
+		}else if(mimeType.contains("word")){
+			return R.drawable.word;
+		}else if(mimeType.contains("excel")||mimeType.contains("sheet")){
+			return R.drawable.excel;
+		}else if(mimeType.contains("audio")){
+			return R.drawable.audio;
+		}else if(mimeType.contains("powerpoint")){
+			return R.drawable.ppt;
+		}else{
+			return R.drawable.file;
+		}
 	}
 }
