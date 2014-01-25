@@ -57,15 +57,15 @@ public abstract class BaseFragment extends Fragment implements OnClickListener{
 
 	@Override
 	public void onPause() {
-		AVAnalytics.onFragmentEnd(TAG);
 		super.onPause();
+		AVAnalytics.onFragmentEnd(TAG);
 	}
 
 
 	@Override
 	public void onResume() {
-		AVAnalytics.onFragmentStart(TAG);
 		super.onResume();
+		AVAnalytics.onFragmentStart(TAG);
 	}
 
 

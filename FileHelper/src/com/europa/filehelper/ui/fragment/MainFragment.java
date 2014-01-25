@@ -23,6 +23,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.avos.avoscloud.AVAnalytics;
 import com.europa.filehelper.R;
 import com.europa.filehelper.Tool.FileMIMEType;
 import com.europa.filehelper.Tool.GlobalValue;
@@ -244,6 +245,7 @@ public class MainFragment extends BaseFragment {
 	}
 	
 	private void handleFile(FileItem item){
+		AVAnalytics.onEvent(hostActivity,"openFile");
 		Intent intent = new Intent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setAction(android.content.Intent.ACTION_VIEW);
