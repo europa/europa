@@ -2,6 +2,8 @@ package com.europa.filehelper.ui.activity;
 
 import android.app.DialogFragment;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.MenuItemCompat;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.widget.SearchView;
+import android.widget.Toast;
 import android.widget.SearchView.OnQueryTextListener;
 
 import com.europa.filehelper.R;
@@ -20,12 +23,34 @@ import com.europa.filehelper.ui.fragment.MainFragment;
 public class MainActivity extends BaseActivity {
 
 	Brain brain = Brain.newInstance();
+	Boolean isExit=false;
+//	Handler handler=new Handler(){
+//		public void handleMessage(){
+//			isExit=false;
+//		}};
+		
+	Handler handler=new Handler(){
+
+		@Override
+		public void handleMessage(Message msg) {
+			isExit=false;
+			super.handleMessage(msg);
+		}
+	};
 
 	@Override
 	public void onBackPressed() {
+		if(isExit){
+			isExit=false;
+			super.onBackPressed();
+			return;
+		}
 		if (brain.getCurrentFile().equals(
 				Environment.getExternalStorageDirectory())) {
-			brain = null;
+			isExit=true;
+			handler.sendEmptyMessageDelayed(0,2000);
+			Toast.makeText(this,"再按一次退出程序",1000).show();
+			return ;
 		} else {
 			brain.setCurrentFile(brain.getCurrentFile().getParentFile());
 		}
