@@ -25,35 +25,32 @@ import com.europa.filehelper.ui.activity.BaseActivity;
  * @author europa
  * 
  */
-public abstract class BaseFragment extends Fragment implements OnClickListener{
+public abstract class BaseFragment extends Fragment implements OnClickListener {
 	String TAG = this.getClass().getSimpleName();
 	public BaseActivity hostActivity;
 	ActionBar actionBar;
-	Brain brain=Brain.newInstance();
+	Brain brain = Brain.newInstance();
 	File currentFile;
-	
+
 	public void onCreate(Bundle savedInstanceState) {
-		hostActivity = (BaseActivity)getActivity();
-		actionBar=hostActivity.getActionBar();
+		hostActivity = (BaseActivity) getActivity();
+		actionBar = hostActivity.getActionBar();
 		super.onCreate(savedInstanceState);
 	}
-	
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view =findView(inflater);
+		View view = findView(inflater);
 		AVAnalytics.trackAppOpened(hostActivity.getIntent());
 		handle();
 		return view;
 	}
-	
-	
+
 	@Override
 	public void onClick(View arg0) {
-		
-	}
 
+	}
 
 	@Override
 	public void onPause() {
@@ -61,26 +58,28 @@ public abstract class BaseFragment extends Fragment implements OnClickListener{
 		AVAnalytics.onFragmentEnd(TAG);
 	}
 
-
 	@Override
 	public void onResume() {
 		super.onResume();
 		AVAnalytics.onFragmentStart(TAG);
 	}
 
-
 	public abstract View findView(LayoutInflater inflater);
+
 	public abstract void handle();
-	public void replaceFragment(BaseFragment fragment){
-		hostActivity.subFragment=fragment;
-		FragmentTransaction transaction=hostActivity.fragmentManager.beginTransaction();
-		transaction.replace(R.id.container,fragment);
+
+	public void replaceFragment(BaseFragment fragment) {
+		hostActivity.subFragment = fragment;
+		FragmentTransaction transaction = hostActivity.fragmentManager
+				.beginTransaction();
+		transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+		transaction.replace(R.id.container, fragment);
 		transaction.addToBackStack(null);
 		transaction.commit();
 	}
-	public void showToast(String toast){
-		Toast.makeText(hostActivity,toast,Toast.LENGTH_SHORT).show();
+
+	public void showToast(String toast) {
+		Toast.makeText(hostActivity, toast, Toast.LENGTH_SHORT).show();
 	}
-	
-	
+
 }

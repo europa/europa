@@ -55,8 +55,6 @@ public class MainActivity extends BaseActivity {
 		searchView.setOnQueryTextListener(new OnQueryTextListener() {
 			@Override
 			public boolean onQueryTextSubmit(String query) {
-				((MainFragment) subFragment).search(searchView.getQuery()
-						.toString());
 				return false;
 			}
 

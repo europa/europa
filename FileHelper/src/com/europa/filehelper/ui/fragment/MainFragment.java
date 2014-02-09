@@ -81,8 +81,7 @@ public class MainFragment extends BaseFragment {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				FileItem item = fileItemList.get(arg2);
-				if (mActionMode == null
-						&& item.getFile().isDirectory()) {
+				if (mActionMode == null && item.getFile().isDirectory()) {
 					brain.setCurrentFile(item.getFile());
 					replaceFragment(new MainFragment());
 				} else {
@@ -121,7 +120,7 @@ public class MainFragment extends BaseFragment {
 			public boolean onActionItemClicked(ActionMode arg0, MenuItem arg1) {
 				switch (arg1.getItemId()) {
 				case R.id.item_delete:
-//					mActionMode = arg0;
+					// mActionMode = arg0;
 					((MainActivity) hostActivity).handleDelete();
 					break;
 				case R.id.all:
@@ -206,8 +205,8 @@ public class MainFragment extends BaseFragment {
 		int length = key.length();
 		if (length == 0) {
 			type = GlobalValue.SEARCH_ALL;
-		} else if (length == 1) {
-			type = GlobalValue.SEARCH_EQUAL;
+		} else if (length == 1 && key.equals("*")) {
+			type = GlobalValue.SEARCH_ALL;
 		} else if (key.startsWith("*") && key.endsWith("*")) {
 			type = GlobalValue.SERACH_CONTAIN;
 			key = key.substring(1, length - 1);
@@ -218,84 +217,85 @@ public class MainFragment extends BaseFragment {
 			type = GlobalValue.SERCH_START;
 			key = key.substring(0, length - 1);
 		} else {
-			type = GlobalValue.SEARCH_EQUAL;
+			type = GlobalValue.SERCH_START;
 		}
 		items = searchByType(type, key);
 		fileListAdapter.list = items;
 		fileListAdapter.notifyDataSetChanged();
-		if (items.size() != 0&&items.size()!=fileItemList.size()) {
-			hostActivity.startActionMode(multiChoiceModeListener);
-		}
+
 	}
 
 	public List<FileItem> searchByType(int type, String key) {
 		List<FileItem> items = new ArrayList<FileItem>();
 		for (FileItem item : fileItemList) {
-			 String name = item.getFile().getName();
+			String name = item.getFile().getName().toLowerCase();
+			key = key.toLowerCase();
 			if ((type == GlobalValue.SEARCH_END && name.endsWith(key))
 					|| (type == GlobalValue.SEARCH_EQUAL
 							&& name.equalsIgnoreCase((key))
 							|| (type == GlobalValue.SERACH_CONTAIN)
 							&& name.contains(key) || (type == GlobalValue.SERCH_START && name
-							.startsWith(key)))||type==GlobalValue.SEARCH_ALL) {
+							.startsWith(key)))
+					|| type == GlobalValue.SEARCH_ALL) {
 				items.add(item);
 			}
 		}
 		return items;
 	}
-	
-	private void handleFile(FileItem item){
-		AVAnalytics.onEvent(hostActivity,"openFile");
+
+	private void handleFile(FileItem item) {
+		AVAnalytics.onEvent(hostActivity, "openFile");
 		Intent intent = new Intent();
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setAction(android.content.Intent.ACTION_VIEW);
-        String type = getMIMEType(item.getFile());
-        if(type.equals("")){
-        	showToast("此文件不能打开！");
-        	return;
-        }
-        intent.setDataAndType(Uri.fromFile(item.getFile()), type);
-        startActivity(intent);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		intent.setAction(android.content.Intent.ACTION_VIEW);
+		String type = getMIMEType(item.getFile());
+		if (type.equals("")) {
+			showToast("此文件不能打开！");
+			return;
+		}
+		intent.setDataAndType(Uri.fromFile(item.getFile()), type);
+		startActivity(intent);
 	}
-	
-	private String getMIMEType(File file){
-		String type="";
-		String fileName=file.getName();
-		if(!fileName.contains(".")){
+
+	private String getMIMEType(File file) {
+		String type = "";
+		String fileName = file.getName();
+		if (!fileName.contains(".")) {
 			return type;
 		}
-		String end=fileName.substring(fileName.lastIndexOf("."),fileName.length());
-		for(int i=0;i<FileMIMEType.MIME_TYPES.length;i++){
-			if(end.equals(FileMIMEType.MIME_TYPES[i][0])){
-				type=FileMIMEType.MIME_TYPES[i][1];
+		String end = fileName.substring(fileName.lastIndexOf("."),
+				fileName.length());
+		for (int i = 0; i < FileMIMEType.MIME_TYPES.length; i++) {
+			if (end.equals(FileMIMEType.MIME_TYPES[i][0])) {
+				type = FileMIMEType.MIME_TYPES[i][1];
 				break;
 			}
 		}
 		return type;
 	}
-	
-	private int getFileType(FileItem item){
-		if(item.getFile().isDirectory()){
+
+	private int getFileType(FileItem item) {
+		if (item.getFile().isDirectory()) {
 			return R.drawable.folder;
 		}
-		String mimeType=getMIMEType(item.getFile());
-		if(mimeType.contains("text")){
+		String mimeType = getMIMEType(item.getFile());
+		if (mimeType.contains("text")) {
 			return R.drawable.txt;
-		}else if(mimeType.contains("video")){
+		} else if (mimeType.contains("video")) {
 			return R.drawable.video;
-		}else if(mimeType.contains("application/vnd.android.package-archive")){
+		} else if (mimeType.contains("application/vnd.android.package-archive")) {
 			return R.drawable.apk;
-		}else if(mimeType.contains("image")){
+		} else if (mimeType.contains("image")) {
 			return R.drawable.image;
-		}else if(mimeType.contains("word")){
+		} else if (mimeType.contains("word")) {
 			return R.drawable.word;
-		}else if(mimeType.contains("excel")||mimeType.contains("sheet")){
+		} else if (mimeType.contains("excel") || mimeType.contains("sheet")) {
 			return R.drawable.excel;
-		}else if(mimeType.contains("audio")){
+		} else if (mimeType.contains("audio")) {
 			return R.drawable.audio;
-		}else if(mimeType.contains("powerpoint")){
+		} else if (mimeType.contains("powerpoint")) {
 			return R.drawable.ppt;
-		}else{
+		} else {
 			return R.drawable.file;
 		}
 	}
