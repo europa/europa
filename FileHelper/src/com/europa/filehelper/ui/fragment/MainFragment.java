@@ -18,10 +18,8 @@ import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.avos.avoscloud.AVAnalytics;
 import com.europa.filehelper.R;
@@ -44,6 +42,7 @@ public class MainFragment extends BaseFragment {
 	ListView fileListView;
 	File currentFile;
 	List<FileItem> fileItemList = new ArrayList<FileItem>();
+	List<FileItem> allFileItems = new ArrayList<FileItem>();
 	MultiChoiceModeListener multiChoiceModeListener;
 	FileApdater fileListAdapter;
 	ActionMode mActionMode;
@@ -63,11 +62,13 @@ public class MainFragment extends BaseFragment {
 			currentFile = brain.getCurrentFile();
 			hostActivity.addDirectorys(currentFile);
 			fileItemList.clear();
+			allFileItems.clear();
 			for (File file : currentFile.listFiles()) {
 				FileItem item = new FileItem();
 				item.setFile(file);
 				item.setType(getFileType(item));
 				fileItemList.add(item);
+				allFileItems.add(item);
 			}
 		}
 		fileListView = ViewUtil.findListView(view, R.id.fileListView);
@@ -219,15 +220,14 @@ public class MainFragment extends BaseFragment {
 		} else {
 			type = GlobalValue.SERCH_START;
 		}
-		items = searchByType(type, key);
-		fileListAdapter.list = items;
+		searchByType(type, key);
 		fileListAdapter.notifyDataSetChanged();
 
 	}
 
-	public List<FileItem> searchByType(int type, String key) {
-		List<FileItem> items = new ArrayList<FileItem>();
-		for (FileItem item : fileItemList) {
+	public void searchByType(int type, String key) {
+		fileItemList.clear();
+		for (FileItem item : allFileItems) {
 			String name = item.getFile().getName().toLowerCase();
 			key = key.toLowerCase();
 			if ((type == GlobalValue.SEARCH_END && name.endsWith(key))
@@ -237,10 +237,9 @@ public class MainFragment extends BaseFragment {
 							&& name.contains(key) || (type == GlobalValue.SERCH_START && name
 							.startsWith(key)))
 					|| type == GlobalValue.SEARCH_ALL) {
-				items.add(item);
+				fileItemList.add(item);
 			}
 		}
-		return items;
 	}
 
 	private void handleFile(FileItem item) {
