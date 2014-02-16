@@ -23,36 +23,35 @@ import com.europa.filehelper.ui.fragment.MainFragment;
 public class MainActivity extends BaseActivity {
 
 	Brain brain = Brain.newInstance();
-	Boolean isExit=false;
-//	Handler handler=new Handler(){
-//		public void handleMessage(){
-//			isExit=false;
-//		}};
-		
-	Handler handler=new Handler(){
+	Boolean isExit = false;
+	// Handler handler=new Handler(){
+	// public void handleMessage(){
+	// isExit=false;
+	// }};
+
+	Handler handler = new Handler() {
 
 		@Override
 		public void handleMessage(Message msg) {
-			isExit=false;
+			isExit = false;
 			super.handleMessage(msg);
 		}
 	};
 
 	@Override
 	public void onBackPressed() {
-		if(isExit){
-			isExit=false;
-			super.onBackPressed();
-			return;
-		}
-		if (brain.getCurrentFile().equals(
-				Environment.getExternalStorageDirectory())) {
-			isExit=true;
-			handler.sendEmptyMessageDelayed(0,2000);
-			Toast.makeText(this,"再按一次退出程序",1000).show();
-			return ;
+		if (isExit) {
+			isExit = false;
 		} else {
-			brain.setCurrentFile(brain.getCurrentFile().getParentFile());
+			if (brain.getCurrentFile().equals(
+					Environment.getExternalStorageDirectory())) {
+				isExit = true;
+				handler.sendEmptyMessageDelayed(0, 2000);
+				Toast.makeText(this, "再按一次退出程序", 1000).show();
+				return;
+			} else {
+				brain.setCurrentFile(brain.getCurrentFile().getParentFile());
+			}
 		}
 		super.onBackPressed();
 	}
@@ -85,8 +84,7 @@ public class MainActivity extends BaseActivity {
 
 			@Override
 			public boolean onQueryTextChange(String newText) {
-				((MainFragment) subFragment).search(searchView.getQuery()
-						.toString());
+				getFragment().search(searchView.getQuery().toString());
 				return false;
 			}
 		});
@@ -99,7 +97,7 @@ public class MainActivity extends BaseActivity {
 	}
 
 	public void clickPositiveBtn() {
-		((MainFragment) subFragment).handleDelete();
+		getFragment().handleDelete();
 	}
 
 	public void clickNegativeBtn() {
@@ -109,6 +107,10 @@ public class MainActivity extends BaseActivity {
 	public void handleDelete() {
 		fragment = FileDialogFragment.newInstance("是否删除文件？");
 		fragment.show(fragmentManager, null);
+	}
+
+	private MainFragment getFragment() {
+		return (MainFragment) fragmentManager.findFragmentById(R.id.container);
 	}
 
 }

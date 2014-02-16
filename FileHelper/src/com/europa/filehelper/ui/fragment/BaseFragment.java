@@ -69,7 +69,6 @@ public abstract class BaseFragment extends Fragment implements OnClickListener {
 	public abstract void handle();
 
 	public void replaceFragment(BaseFragment fragment) {
-		hostActivity.subFragment = fragment;
 		FragmentTransaction transaction = hostActivity.fragmentManager
 				.beginTransaction();
 		transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);

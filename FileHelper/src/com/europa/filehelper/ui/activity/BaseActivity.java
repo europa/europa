@@ -22,7 +22,6 @@ public abstract class BaseActivity extends Activity {
 	 * must be valued in SubActivity
 	 */
 	public String TAG = this.getClass().getSimpleName();
-	public BaseFragment subFragment;
 	public FragmentManager fragmentManager;
 	public LinearLayout directoryLayout;
 	public Boolean edited = false;
@@ -39,7 +38,6 @@ public abstract class BaseActivity extends Activity {
 			if (fragmentManager == null) {
 				fragmentManager = getFragmentManager();
 			}
-			subFragment = baseFragment;
 			fragmentManager.beginTransaction().add(id, baseFragment).commit();
 		}
 	}
