@@ -65,12 +65,15 @@ public class MainFragment extends BaseFragment {
 			hostActivity.addDirectorys(currentFile);
 			fileItemList.clear();
 			allFileItems.clear();
-			for (File file : currentFile.listFiles()) {
-				FileItem item = new FileItem();
-				item.setFile(file);
-				item.setType(getFileType(item));
-				fileItemList.add(item);
-				allFileItems.add(item);
+			File[] files = currentFile.listFiles();
+			if (files != null) {
+				for (File file : files) {
+					FileItem item = new FileItem();
+					item.setFile(file);
+					item.setType(getFileType(item));
+					fileItemList.add(item);
+					allFileItems.add(item);
+				}
 			}
 		}
 		fileListView = ViewUtil.findListView(view, R.id.fileListView);
@@ -83,8 +86,8 @@ public class MainFragment extends BaseFragment {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				((MainActivity)hostActivity).searchView.setQuery("", false);
-				
+				((MainActivity) hostActivity).searchView.setQuery("", false);
+
 				FileItem item = fileItemList.get(arg2);
 				if (mActionMode == null && item.getFile().isDirectory()) {
 					brain.setCurrentFile(item.getFile());
