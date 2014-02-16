@@ -4,15 +4,16 @@ import android.app.DialogFragment;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.view.MenuCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.widget.SearchView;
-import android.widget.Toast;
+import android.widget.SearchView.OnCloseListener;
 import android.widget.SearchView.OnQueryTextListener;
+import android.widget.Toast;
 
 import com.europa.filehelper.R;
 import com.europa.filehelper.Tool.Brain;
@@ -24,11 +25,8 @@ public class MainActivity extends BaseActivity {
 
 	Brain brain = Brain.newInstance();
 	Boolean isExit = false;
-	// Handler handler=new Handler(){
-	// public void handleMessage(){
-	// isExit=false;
-	// }};
-
+	public SearchView searchView;
+	public MenuItem searchItem;
 	Handler handler = new Handler() {
 
 		@Override
@@ -70,12 +68,12 @@ public class MainActivity extends BaseActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.main, menu);
-		MenuItem item = menu.findItem(R.id.action_search);
-		final SearchView searchView = (SearchView) MenuItemCompat
-				.getActionView(item);
+		searchItem = menu.findItem(R.id.action_search);
+		searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
 		searchView.setOnQueryTextListener(new OnQueryTextListener() {
 			@Override
 			public boolean onQueryTextSubmit(String query) {

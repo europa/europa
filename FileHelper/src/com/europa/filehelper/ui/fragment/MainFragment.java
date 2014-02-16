@@ -7,6 +7,7 @@ import java.util.List;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
+import android.support.v4.view.MenuItemCompat;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
@@ -19,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.avos.avoscloud.AVAnalytics;
@@ -81,6 +83,8 @@ public class MainFragment extends BaseFragment {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
+				((MainActivity)hostActivity).searchView.setQuery("", false);
+				
 				FileItem item = fileItemList.get(arg2);
 				if (mActionMode == null && item.getFile().isDirectory()) {
 					brain.setCurrentFile(item.getFile());

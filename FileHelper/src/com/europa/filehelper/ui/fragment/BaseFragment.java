@@ -10,12 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.avos.avoscloud.AVAnalytics;
 import com.europa.filehelper.R;
 import com.europa.filehelper.Tool.Brain;
 import com.europa.filehelper.ui.activity.BaseActivity;
+import com.europa.filehelper.ui.activity.MainActivity;
 
 /**
  * the fragment's common viriables and methods are here
@@ -62,6 +64,10 @@ public abstract class BaseFragment extends Fragment implements OnClickListener {
 	public void onResume() {
 		super.onResume();
 		AVAnalytics.onFragmentStart(TAG);
+		SearchView searchView=((MainActivity)hostActivity).searchView;
+		if(searchView!=null){
+			searchView.clearFocus();
+		}
 	}
 
 	public abstract View findView(LayoutInflater inflater);
