@@ -86,12 +86,11 @@ public class MainFragment extends BaseFragment {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				((MainActivity) hostActivity).searchView.setQuery("", false);
-
 				FileItem item = fileItemList.get(arg2);
 				if (mActionMode == null && item.getFile().isDirectory()) {
 					brain.setCurrentFile(item.getFile());
 					replaceFragment(new MainFragment());
+					((MainActivity) hostActivity).searchView.setQuery("", false);
 				} else {
 					handleFile(item);
 				}
