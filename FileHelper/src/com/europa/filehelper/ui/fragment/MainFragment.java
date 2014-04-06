@@ -90,10 +90,10 @@ public class MainFragment extends BaseFragment {
 				if (mActionMode == null && item.getFile().isDirectory()) {
 					brain.setCurrentFile(item.getFile());
 					replaceFragment(new MainFragment());
-					((MainActivity) hostActivity).searchView.setQuery("", false);
 				} else {
 					handleFile(item);
 				}
+				((MainActivity)hostActivity).setSearchViewEmpty();
 			}
 		});
 		multiChoiceModeListener = new MultiChoiceModeListener() {

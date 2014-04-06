@@ -25,6 +25,7 @@ public class MainActivity extends BaseActivity {
 
 	Brain brain = Brain.newInstance();
 	Boolean isExit = false;
+	Boolean canSearch=true;
 	public SearchView searchView;
 	public MenuItem searchItem;
 	Handler handler = new Handler() {
@@ -82,7 +83,10 @@ public class MainActivity extends BaseActivity {
 
 			@Override
 			public boolean onQueryTextChange(String newText) {
-				getFragment().search(searchView.getQuery().toString());
+				if(canSearch){
+					getFragment().search(searchView.getQuery().toString());
+				}
+				canSearch=true;
 				return false;
 			}
 		});
@@ -110,5 +114,10 @@ public class MainActivity extends BaseActivity {
 	private MainFragment getFragment() {
 		return (MainFragment) fragmentManager.findFragmentById(R.id.container);
 	}
-
+	
+	public void setSearchViewEmpty(){
+		canSearch=false;
+		searchView.setQuery("",false);
+		
+	}
 }
