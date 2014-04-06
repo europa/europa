@@ -172,18 +172,46 @@ public class MainFragment extends BaseFragment {
 		List<FileItem> deletedItems = new ArrayList<FileItem>();
 		for (FileItem item : fileItemList) {
 			if (item.getChecked()) {
-				File file = item.getFile();
-				String path = file.getPath();
-				if (file.delete()) {
-					Log.i(TAG, "delete " + path + " successfully");
-				} else {
-					Log.i(TAG, "delete " + path + " unsuccessfully");
-				}
+				deleteFileItem(item);
 				deletedItems.add(item);
 			}
 		}
 		fileItemList.removeAll(deletedItems);
 		multiChoiceModeListener.onDestroyActionMode(mActionMode);
+	}
+	
+	public void deleteFileItem(FileItem fileItem){
+		deleteFile(fileItem.getFile());
+	}
+	
+	/**
+	 * 
+	 * @param file:the file to be deleted
+	 * 
+	 */
+	private void deleteFile(File file){
+		if(file.isFile()){
+			if(file.delete()){
+				Log.i(TAG,"delete "+file.getPath()+" successfully");
+			}else{
+				Log.i(TAG,"delete "+file.getPath()+" unsuccessfully");
+			}
+		}else{ 
+			if(file.listFiles().length==0){
+				if(file.delete()){
+					Log.i(TAG,"delete "+file.getPath()+" successfully");
+				}else{
+					Log.i(TAG,"delete "+file.getPath()+" unsuccessfully");
+				}
+			}else{
+				for(File tempFile:file.listFiles()){
+					deleteFile(tempFile);
+				}
+				//not null directory must be deleted at the last
+				deleteFile(file);
+			}
+			
+		}
 	}
 
 	private void handleAll(MenuItem item) {
